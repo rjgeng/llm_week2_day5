@@ -2,56 +2,68 @@
 
 I'm currently learning from the Udemy course [**LLM Engineering: Master AI, Large Language Models & Agents**](https://www.udemy.com/course/llm-engineering-master-ai-and-large-language-models), taught by [Ed Donner](https://www.linkedin.com/in/eddonner/).
 
-On **April 23, 2025**, while working on the code from **Week 2, Day 5**, I accidentally triggered a billing incident that cost me **$132.42 within 30 minutes**.
+On **April 23, 2025**, while working on code from **Week 2, Day 5**, I accidentally triggered a billing incident that cost me **$132.42 within 30 minutes**.
+
+> 🔗 **GitHub Repository:**  
+> [github.com/rjgeng/openai_api_billing_incident](https://github.com/rjgeng/openai_api_billing_incident)
 
 ---
 
 ## 🔥 What Happened
 
-While converting the `day5.ipynb` Jupyter notebook into a Python script (`day5.py`) and extending it with my own Gradio app (`airline_multi-modal.py`), I ran into two key mistakes:
+While rewriting the original `day5.ipynb` into a Python script (`day5.py`) and enhancing it into a Gradio app (`airline_multi-modal.py`), I encountered two critical issues:
 
-- **No usage limit was set** — the default billing tier (Usage Tier 1) allowed spending up to $120 before any alert, causing my account to go into the negative after my $10 initial credit was exhausted.
-- **A logic bug in my code caused repeated TTS (Text-to-Speech) requests** — attempting to read large Markdown files like `chatlog.md` multiple times, silently accumulating charges.
+- ❌ **No usage limit set** → default `Tier 1` allowed charges up to $120 without real-time warnings.
+- ❌ **Loop in TTS code** → called `talker()` with a large `chatlog.md` response file multiple times.
 
 The result:
-- ~**25 image generations** with DALL·E 3 (~$40)
-- ~**8.8 million characters** sent to the TTS engine (~$80–90)
-- Several `429` errors appeared while I kept refreshing the billing dashboard, unaware of the pending costs.
+- ~**25 DALL·E 3 image generations** (~$40)
+- ~**8.8 million characters** sent to **TTS** (~$80+)
+- Several `429 Too Many Requests` errors appeared, but billing kept accruing silently.
+
+---
+
+## 📸 Screenshots
+
+### 🧾 Billing Summary  
+![Billing Screenshot](./week2/scripts/day5/billing_incident/incident_activity_&_cost/billing_page_screenshot.png)
+
+### 📊 Usage Overview  
+![Usage Screenshot](./week2/scripts/day5/billing_incident/incident_activity_&_cost/usage_page_screenshot.png)
+
+### ⚙️ API Limit Page  
+![Limit Screenshot](./week2/scripts/day5/billing_incident/incident_activity_&_cost/limit_page_screenshot.png)
+
+---
+
+## 🕒 Postmortem Timeline 
+
+| Time       | Event Description                                                                                    |
+|------------|-------------------------------------------------------------------------------------------------     |
+| 09:06 AM   | Started running `airline_multi-modal.py` with TTS + DALL·E                                           |
+| 09:06 AM   | `chatlog.md` generated, triggered TTS, then app crashed (Error 429), assumed no cost incurred        |
+| 09:30 AM   | Realized billing hit negative **-$87.66** after refresh bill page                                    |
+| 09:49 AM   | Added $90 → Balance shown as +$12.34                                                                 |
+| 10:15 AM   | Re-running `airline_multi-modal.py` with TTS + DALL·E, `chatlog.md` re-generated                     |
+| 10:15 AM   | Account dropped to **-$33.96**, total cost **$132.42**                                               |
 
 ---
 
 ## 🧠 Lessons Learned
 
-- Monitor **usage and billing dashboards** frequently — they're **not real-time** and can lag during rapid requests.
-- Set **usage caps** and implement **API key rotation** and **2FA**.
-- Always double-check code for infinite loops or silent retries, especially when using cost-bearing features like TTS or image generation.
-- Don’t rely only on UI feedback — even an error can still incur charges.
+- ✅ Set **monthly usage caps** immediately.
+- ✅ TTS is priced by **character count**, not by number of calls.
+- ✅ Always implement **error handling** and **retry limits**.
+- ✅ Use logs sparingly with TTS or audio APIs — large logs = big bills.
+- ✅ Monitor billing via **API**, not just the web dashboard.
 
 ---
 
-## 💻 Project Structure
+## 🧩 Code Snippet – TTS Triggered Loop
 
-```plaintext
-/llm_engineering
-├── week1/...
-├── week2
-│  ├── scripts
-│  │    ├── day5
-│  │    │    ├── billing_incident
-│  │    │    │    ├── incident_activity_&_cost
-│  │    │    │    │    ├── activity-2025-04-23-2025-04-24.csv
-│  │    │    │    │    ├── cost_2025-03-24_2025-04-23.csv
-│  │    │    │    │    ├── billing_page_screenshot.png
-│  │    │    │    │    ├── usage_page_screenshot.png
-│  │    │    │    │    ├── limit_page_screenshot.png
-│  │    │    │    │    └── incident_analysis_by_chatgpt.md
-│  │    │    │    └── incident_running-time_files_generated/
-│  │    │    │         ├── chatlog.md
-│  │    │    │         ├── london_*.png
-│  │    │    │         └── session_*.md
-│  │    │    ├── day5.py                       ← Converted Jupyter notebook demo
-│  │    │    ├── airline_multi-modal.py        ← Extended version with Gradio
-│  │    │    └── chatlog.md                    ← Output file that triggered TTS
-│  └── Jupyter Notebook/
-│        └── day5.ipynb                        ← Original Udemy lesson
-└── .env                                       ← API key (not committed)
+```python
+if enable_tts:
+    try:
+        talker(reply)
+    except RateLimitError:
+        history.append({"role": "assistant", "content": "⚠️ TTS quota exceeded."})

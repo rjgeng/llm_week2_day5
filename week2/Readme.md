@@ -4,6 +4,7 @@
 
 ```vbet
 /llm_engineering
+├── week1/... 
 ├── week2 
 │  ├── multi_model_joke_demo                                    ← Streamlit App
 │  │    ├── app.py                                              ← Streamlit UI
@@ -31,16 +32,16 @@
 │  │    ├── day3                                             
 │  │    │     ├── day3.py                                       ← Gradio UI App    
 │  │    │     ├── chat_llama_demo.py                            ← Gradio UI App    
-│  │    │     ├── chat_cohere_demo.py                            ← Gradio UI App    
+│  │    │     ├── chat_cohere_demo.py                           ← Gradio UI App    
 │  │    │     └── chat_demo.py                                  ← Gradio UI App    
 │  │    ├── day4                                            
 │  │    │     ├── day4.py                                       ← Gradio UI App    
-│  │    │     ├── airline_ai_ollama.py                                       ← Gradio UI App    
-│  │    │     └── airline_multi_modle.py                       ← Gradio UI App    
+│  │    │     ├── airline_ai_ollama.py                          ← Gradio UI App    
+│  │    │     └── airline_multi_modle.py                        ← Gradio UI App    
 │  │    └── day5
-│  │    │     ├── day4.py                                       ← Gradio UI App    
-│  │    │     └── xxx_demo.py                                   ← Gradio UI App   
-│  └── output/                                                  ← Saved markdown brochures
+│  │          ├── day5.py                                       ← Gradio UI App    
+│  │          └── airline_multi-modal.py                        ← Gradio UI App   
+│  └── output/                                                  ← Saved output files
 └── .env                                                        ← API key
 ```
 

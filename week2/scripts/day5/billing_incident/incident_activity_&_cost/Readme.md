@@ -1,6 +1,6 @@
 # ChatGPT Analysis
 
-The two files inside this folder can be used to analyze what caused the $132.42 charge, and the analysis above confirms the following major contributors on **April 23, 2025**:
+The two csv files (`activity-2025-04-23-2025-04-24` and `cost_2025-03-24_2025-04-23`) inside this folder can be used to analyze what caused the $132.42 charge, and the analysis above confirms the following major contributors on **April 23, 2025**:
 
 1.  **DALL·E 3 (Image Generation)**
 
