@@ -69,3 +69,15 @@ if enable_tts:
     except RateLimitError:
         history.append({"role": "assistant", "content": "⚠️ TTS quota exceeded."})
 ```
+
+---
+
+## 📬 Final Outcome – OpenAI's Response
+
+OpenAI Support (Janis) replied kindly but confirmed they are **unable to offer refunds**, even for unexpected negative balances. However, they did acknowledge the issue and passed it to their **internal team for review**.
+
+They expressed appreciation for the feedback and encouraged continued learning with OpenAI. While the charges remain, the thoughtful response and escalation were appreciated.
+
+> "We hope this experience doesn’t discourage you from continuing to explore and build with OpenAI."
+
+I’ve since implemented TTS safeguards, cost tracking, and usage caps — and I’ll keep learning.
