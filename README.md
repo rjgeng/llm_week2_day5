@@ -1,5 +1,8 @@
 # OpenAI API Billing Incident
 
+### 🙏 With thanks to Ed Donner
+This repo is part of my learning journey through the Udemy course *LLM Engineering: Master AI, Large Language Models & Agents* by [Ed Donner](https://www.linkedin.com/in/eddonner/). His guidance helped me turn a mistake into a lesson — and a case study.
+
 I'm currently learning from the Udemy course [**LLM Engineering: Master AI, Large Language Models & Agents**](https://www.udemy.com/course/llm-engineering-master-ai-and-large-language-models), taught by [Ed Donner](https://www.linkedin.com/in/eddonner/).
 
 On **April 23, 2025**, while working on code from **Week 2, Day 5**, I accidentally triggered a billing incident that cost me **$132.42 within 30 minutes**.
@@ -68,16 +71,3 @@ if enable_tts:
         talker(reply)
     except RateLimitError:
         history.append({"role": "assistant", "content": "⚠️ TTS quota exceeded."})
-```
-
----
-
-## 📬 Final Outcome – OpenAI's Response
-
-OpenAI Support (Janis) replied kindly but confirmed they are **unable to offer refunds**, even for unexpected negative balances. However, they did acknowledge the issue and passed it to their **internal team for review**.
-
-They expressed appreciation for the feedback and encouraged continued learning with OpenAI. While the charges remain, the thoughtful response and escalation were appreciated.
-
-> "We hope this experience doesn’t discourage you from continuing to explore and build with OpenAI."
-
-I’ve since implemented TTS safeguards, cost tracking, and usage caps — and I’ll keep learning.
