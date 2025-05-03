@@ -39,8 +39,9 @@
 │  │    │     ├── airline_ai_ollama.py                          ← Gradio UI App    
 │  │    │     └── airline_multi_modle.py                        ← Gradio UI App    
 │  │    └── day5
-│  │          ├── day5.py                                       ← Gradio UI App    
-│  │          └── airline_multi-modal.py                        ← Gradio UI App   
+│  │          ├── day5.py                                       ← Gradio UI App  
+│  │          ├── airline_multi-modal.py                        ← Gradio UI App (Cause the billing incident)   
+│  │          └── flightai_tts_safe_multi_modal.py              ← Gradio UI App   
 │  └── output/                                                  ← Saved output files
 └── .env                                                        ← API key
 ```
